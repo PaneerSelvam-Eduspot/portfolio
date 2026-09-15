@@ -1,0 +1,67 @@
+.controls {
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  right: clamp(1rem, 3vw, 1.75rem);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-sm);
+}
+
+.control {
+  cursor: pointer;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.control svg {
+  color: var(--color-text-faint);
+  pointer-events: none;
+  transition: color var(--t-fast);
+}
+
+.control:hover {
+  background: var(--color-surface-2);
+}
+
+.control:hover svg {
+  color: var(--color-text);
+}
+
+.control.activeBtn {
+  background: var(--accent-gradient);
+  box-shadow: var(--shadow-glow);
+}
+
+.control.activeBtn svg {
+  color: #fff;
+}
+
+@media (max-width: 860px) {
+  .controls {
+    top: auto;
+    bottom: var(--space-4);
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+    /* solid (not translucent) on mobile — content scrolls behind this bar,
+       so a glassy blur would make both the nav and the content unreadable */
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+}

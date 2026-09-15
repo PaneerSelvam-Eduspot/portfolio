@@ -1,0 +1,41 @@
+.contactIcon {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 10;
+  bottom: var(--space-5);
+  left: var(--space-5);
+  gap: var(--space-3);
+}
+
+.contactIcon a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--t-fast), color var(--t-fast),
+    transform var(--t-fast), border-color var(--t-fast);
+}
+
+.contactIcon a:hover,
+.contactIcon a:focus-visible {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 860px) {
+  .contactIcon {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: var(--space-6);
+  }
+}

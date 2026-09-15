@@ -1,0 +1,343 @@
+.headerContent {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.leftHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* soft blurred gradient aura behind the photo — the signature shape,
+   replacing the original's hard diagonal clip-path */
+.aura {
+  position: absolute;
+  width: min(360px, 78%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  filter: blur(54px);
+  opacity: 0.45;
+  z-index: -1;
+}
+
+/* a second, smaller soft blob that drifts slowly and independently —
+   echoes the reference hero's loosely-floating background circles,
+   kept subtle (small amplitude, slow) so it reads as ambient depth
+   rather than a distraction */
+.auraDrift {
+  position: absolute;
+  width: min(140px, 30%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 6%;
+  left: -6%;
+  background: var(--accent-2);
+  filter: blur(40px);
+  opacity: 0.3;
+  z-index: -1;
+  animation: auraDrift 11s ease-in-out infinite;
+}
+
+.ring {
+  position: absolute;
+  width: min(320px, 70%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px dashed var(--color-border);
+  animation: spinSlow 40s linear infinite;
+}
+
+.image {
+  border-radius: 50%;
+  width: min(280px, 62%);
+  aspect-ratio: 1;
+  position: relative;
+  background-color: var(--color-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow);
+  border: 4px solid var(--color-surface);
+  animation: float 6s ease-in-out infinite;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.badge {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  border: 3px solid var(--color-bg);
+  transition: border-color var(--t-base);
+}
+
+.badge img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+}
+
+.badgeCode {
+  bottom: 14%;
+  right: 14%;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 1.1rem;
+  animation: float 5s ease-in-out infinite;
+}
+
+.badgeReact {
+  top: 6%;
+  right: -2%;
+  width: 3.4rem;
+  height: 3.4rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  /* same duration/easing/phase as .image below — so it bounces in sync
+     with the picture rather than drifting independently */
+  animation: float 6s ease-in-out infinite;
+}
+
+.badgeJs {
+  top: 4%;
+  left: 2%;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  animation: float 6s ease-in-out infinite;
+}
+
+/* paired with .badgeJs — sits just below it on the same side, same
+   size and the same synced float, so JS/TS read as one grouped pair
+   rather than two unrelated floating icons */
+.badgeTs {
+  top: 24%;
+  left: -7%;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  animation: float 6s ease-in-out infinite;
+}
+
+.rightHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-2);
+  position: relative;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 0.1rem;
+}
+
+.wave {
+  display: inline-block;
+  height: 1.5rem;
+  width: 1.5rem;
+  transform-origin: 70% 70%;
+  animation: wave 2.4s ease-in-out infinite;
+}
+
+/* the big name treatment — heavy display font, slanted, a "steel" gradient
+   that slowly shimmers left to right. See index.css for --name-gradient. */
+.bigName {
+  font-family: var(--font-impact);
+  font-size: clamp(2.4rem, 5.6vw, 4.1rem);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  transform: skewX(-6deg);
+  transform-origin: left center;
+
+  background-image: var(--name-gradient);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: nameShimmer 6s ease-in-out infinite alternate;
+
+  margin-bottom: 0.15rem;
+}
+
+.role {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 600;
+}
+
+.role span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  color: var(--color-text-muted);
+  max-width: 38ch;
+  font-size: 1.05rem;
+  margin-top: 0.3rem;
+}
+
+.scrollCue {
+  /* anchored to the hero section itself (not the viewport) — now that
+     the page scrolls continuously, this should scroll away with the
+     hero once the visitor has actually started scrolling, rather than
+     staying glued to the bottom of every section forever */
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: clamp(1.5rem, 4vw, 2.5rem);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-text-faint);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  transition: color var(--t-fast);
+}
+
+.scrollCue:hover {
+  color: var(--color-text-muted);
+}
+
+.scrollCue svg {
+  animation: bounceDown 1.6s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes auraDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(14px, -10px) scale(1.15);
+  }
+}
+
+/* Moved here from index.css — see the note at the top of that file's
+   keyframes section for why a globally-defined @keyframes rule doesn't
+   reliably work when only ever referenced from within a CSS Module. */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(16deg);
+  }
+  30% {
+    transform: rotate(-10deg);
+  }
+  45% {
+    transform: rotate(16deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes nameShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .headerContent {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-6);
+  }
+
+  .leftHeader {
+    order: -1;
+  }
+
+  .image {
+    width: min(220px, 60%);
+  }
+
+  .rightHeader {
+    align-items: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .tagline {
+    max-width: 40ch;
+  }
+
+  /* mobile already scrolls naturally within the page — the hint is
+     redundant there and would collide with the bottom nav pill */
+  .scrollCue {
+    display: none;
+  }
+}

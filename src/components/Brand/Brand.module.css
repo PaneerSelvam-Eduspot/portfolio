@@ -1,0 +1,34 @@
+.brand {
+  position: fixed;
+  z-index: 10;
+  top: clamp(0.9rem, 2vw, 1.35rem);
+  left: clamp(1rem, 3vw, 1.75rem);
+  padding: 0.2rem 0.3rem;
+
+  font-family: var(--font-impact);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transform: skewX(-8deg);
+
+  background-image: var(--name-gradient);
+  background-size: 260% 100%;
+  background-position: 15% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  transition: transform var(--t-fast), filter var(--t-fast);
+}
+
+.brand:hover {
+  transform: skewX(-8deg) translateY(-2px);
+  filter: brightness(1.15);
+}
+
+@media (max-width: 560px) {
+  .brand {
+    font-size: 0.95rem;
+  }
+}

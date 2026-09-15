@@ -1,0 +1,378 @@
+/* -------------------------------------------------------------------- */
+/*  Design tokens                                                        */
+/*  Dark (default): deep indigo-black surface, violet accent gradient.   */
+/*  Light: warm paper surface, plum/rose accent gradient.                */
+/*  This keeps the original's "dark navy + indigo" identity but refines  */
+/*  it into a small, consistent token system instead of one-off values.  */
+/* -------------------------------------------------------------------- */
+:root {
+  --color-bg: #0e1018;
+  --color-surface: #171a26;
+  --color-surface-2: #1f2333;
+  --color-border: rgba(255, 255, 255, 0.1);
+
+  --color-text: #f3f4f8;
+  --color-text-muted: #9298b3;
+  --color-text-faint: #6b7190;
+
+  --accent-1: #7c6cf0;
+  --accent-2: #5b8cf7;
+  --accent-solid: #6f66ef;
+  --accent-gradient: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  --accent-wash: rgba(124, 108, 240, 0.14);
+
+  /* legacy aliases still used by a couple of shared classes */
+  --color-primary: var(--color-bg);
+  --color-secondary: var(--accent-solid);
+  --color-white: var(--color-text);
+
+  /* spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* radii */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-full: 999px;
+
+  /* elevation */
+  --shadow-sm: 0 2px 14px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.36);
+  --shadow-glow: 0 14px 44px rgba(124, 108, 240, 0.32);
+
+  /* glass panels (nav, toggle) */
+  --glass-bg: rgba(23, 26, 38, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.09);
+
+  /* motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 0.2s var(--ease);
+  --t-base: 0.4s var(--ease);
+
+  /* type */
+  --font-display: "Outfit", "Poppins", sans-serif;
+  --font-body: "Poppins", sans-serif;
+  --font-impact: "Archivo Black", "Outfit", sans-serif;
+
+  /* name wordmark: a "steel" gradient — accent color, the theme's own
+     text color, the other accent color, back to text color, back to the
+     first accent. Starting and ending on the same stop means it tiles/
+     pans with no seam, so animating it never exposes a gap. Defined
+     directly with --accent-1/--accent-2/--color-text (single-level
+     var() only) and redeclared whole in body.light-mode below — a
+     property built from *nested* indirection (a var() that itself
+     resolves to another var()) does not reliably re-resolve per theme
+     for composite values like a multi-stop gradient, so this is spelled
+     out per theme on purpose rather than composed from extra layers. */
+  --name-gradient: linear-gradient(
+    100deg,
+    var(--accent-1) 0%,
+    var(--color-text) 25%,
+    var(--accent-2) 50%,
+    var(--color-text) 75%,
+    var(--accent-1) 100%
+  );
+
+  color-scheme: dark;
+}
+
+body.light-mode {
+  --color-bg: #faf8f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3eef2;
+  --color-border: rgba(30, 20, 30, 0.1);
+
+  --color-text: #211f2b;
+  --color-text-muted: #635f6f;
+  --color-text-faint: #8b8797;
+
+  --accent-1: #d1567f;
+  --accent-2: #f0a15e;
+  --accent-solid: #cf5480;
+  --accent-gradient: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  --accent-wash: rgba(209, 86, 127, 0.1);
+
+  --color-primary: var(--color-bg);
+  --color-secondary: var(--accent-solid);
+  --color-white: var(--color-text);
+
+  /* redeclared whole (see the note at the :root definition above) —
+     using a darker stand-in for --accent-2's 50% stop specifically,
+     since the real --accent-2 (a light amber) is too pale to read as
+     a thin text stroke on this theme's near-white background, even
+     though it works fine as a button/card fill. */
+  --name-gradient: linear-gradient(
+    100deg,
+    var(--accent-1) 0%,
+    var(--color-text) 25%,
+    #b8611f 50%,
+    var(--color-text) 75%,
+    var(--accent-1) 100%
+  );
+
+  --shadow-sm: 0 2px 14px rgba(40, 20, 30, 0.08);
+  --shadow-md: 0 16px 40px rgba(40, 20, 30, 0.1);
+  --shadow-glow: 0 14px 40px rgba(209, 86, 127, 0.22);
+
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(30, 20, 30, 0.08);
+
+  color-scheme: light;
+}
+
+/* -------------------------------------------------------------------- */
+/*  Reset                                                                */
+/* -------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  font-family: var(--font-body);
+  color: var(--color-text);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  transition: background-color var(--t-base), color var(--t-base);
+  position: relative;
+}
+
+/* soft ambient glow behind everything — restrained, single accent family */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+      60rem 34rem at 14% -8%,
+      var(--accent-wash),
+      transparent 60%
+    ),
+    radial-gradient(50rem 30rem at 100% 105%, var(--accent-wash), transparent 60%);
+  opacity: 0.9;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--accent-solid);
+  color: #fff;
+}
+
+/* visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* -------------------------------------------------------------------- */
+/*  Shared layout primitives                                            */
+/* -------------------------------------------------------------------- */
+/* Sections stack in normal document flow (continuous scroll, not
+   paginated snapping) — each just gets generous breathing room, rather
+   than being forced to fill/center within 100vh regardless of how much
+   content it holds. */
+.section {
+  width: 100%;
+  padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 9vw, 10rem);
+}
+
+/* The hero is the one exception — it should still present as a full
+   landing screen on first load, the same way the reference site's does,
+   with its content vertically centered within that height. */
+#home.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: clamp(5rem, 8vw, 6rem);
+}
+
+.main-title {
+  text-align: center;
+}
+
+.main-title h2 {
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: clamp(2.1rem, 4.2vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.main-title h2 span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.main-title h2 .bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  user-select: none;
+  pointer-events: none;
+
+  font-size: clamp(3.4rem, 7.5vw, 5.6rem);
+  font-weight: 800;
+  white-space: nowrap;
+
+  /* reset the gradient text-clip inherited from ".main-title h2 span" —
+     without this, the low-alpha color below still paints through the
+     clipped gradient background instead of a plain faint tint */
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: currentColor;
+
+  color: var(--color-text);
+  opacity: 0.06;
+}
+
+.btn-con {
+  display: flex;
+  align-self: flex-start;
+  margin-top: var(--space-5);
+}
+
+.main-btn {
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-self: flex-start;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+  background: var(--accent-gradient);
+  box-shadow: var(--shadow-glow);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.main-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 48px rgba(124, 108, 240, 0.4);
+}
+
+.main-btn .btn-text {
+  padding: 0 1.7rem;
+  white-space: nowrap;
+}
+
+.main-btn .btn-icon {
+  background-color: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  margin-right: 0.3rem;
+  transition: transform var(--t-fast);
+}
+
+.main-btn:hover .btn-icon {
+  transform: translateX(2px) rotate(-8deg);
+}
+
+/* -------------------------------------------------------------------- */
+/*  Keyframes                                                            */
+/*  Note: float/wave/nameShimmer/spinSlow used to live here, but they    */
+/*  were only ever referenced from Header.module.css. A @keyframes rule  */
+/*  defined in this plain global file and referenced from a CSS Module   */
+/*  gets a mismatched name after the build: the module file's reference  */
+/*  gets scoped/hashed, but the definition here doesn't, so the browser  */
+/*  can never find a matching keyframes rule — the animation is silently */
+/*  a no-op (animation-name/duration/etc. all look correct on inspection,*/
+/*  but document.getAnimations() on the element is empty). They now live */
+/*  in Header.module.css itself instead, alongside the site's other      */
+/*  Header-local keyframes, so the definition and every reference get    */
+/*  hashed together consistently.                                       */
+/* -------------------------------------------------------------------- */
+
+/* respect users who'd rather not see motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .section {
+    padding-top: clamp(3.5rem, 10vw, 4.5rem);
+    padding-bottom: clamp(3rem, 8vw, 4rem);
+  }
+
+  #home.section {
+    padding-top: clamp(5rem, 14vw, 6rem);
+  }
+
+  /* clear the fixed bottom nav pill only at the very end of the page —
+     mid-page sections don't need the gap, only the last one does */
+  main > .section:last-child {
+    padding-bottom: 6.5rem;
+  }
+}
