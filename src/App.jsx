@@ -22,7 +22,6 @@ function App() {
   const [active, setActive] = useState("home");
   const { theme, toggleTheme } = useTheme();
   const observerRef = useRef(null);
- .
   const isNavigatingRef = useRef(false);
   const navigateTimeoutRef = useRef(null);
 
