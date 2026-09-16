@@ -3,16 +3,12 @@ import { Download } from "lucide-react";
 import { stats, skills, education } from "../../data/about";
 import styles from "./About.module.css";
 
-// Section heading — a small fade + rise, replaying every time it
-// scrolls into view (not just the first time).
+
 const titleReveal = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-// Text blocks: the heading, then the paragraph, then the button — each
-// one its own "brick", laid down in sequence rather than all appearing
-// at once.
 const textStack = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
@@ -23,7 +19,6 @@ const textItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
-// Icon/stat grids — same idea, tighter stagger since there are more items.
 const gridContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08 } },
@@ -34,9 +29,6 @@ const gridItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
-// Skills & Graduation only: a slight left-to-right drift instead of the
-// plain rise used everywhere else, so this block reads a little
-// differently from the stat cards above it.
 const slideRight = {
   hidden: { opacity: 0, x: -22 },
   show: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },

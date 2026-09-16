@@ -1,10 +1,4 @@
-/* -------------------------------------------------------------------- */
-/*  Design tokens                                                        */
-/*  Dark (default): deep indigo-black surface, violet accent gradient.   */
-/*  Light: warm paper surface, plum/rose accent gradient.                */
-/*  This keeps the original's "dark navy + indigo" identity but refines  */
-/*  it into a small, consistent token system instead of one-off values.  */
-/* -------------------------------------------------------------------- */
+
 :root {
   --color-bg: #0e1018;
   --color-surface: #171a26;
@@ -61,16 +55,6 @@
   --font-body: "Poppins", sans-serif;
   --font-impact: "Archivo Black", "Outfit", sans-serif;
 
-  /* name wordmark: a "steel" gradient — accent color, the theme's own
-     text color, the other accent color, back to text color, back to the
-     first accent. Starting and ending on the same stop means it tiles/
-     pans with no seam, so animating it never exposes a gap. Defined
-     directly with --accent-1/--accent-2/--color-text (single-level
-     var() only) and redeclared whole in body.light-mode below — a
-     property built from *nested* indirection (a var() that itself
-     resolves to another var()) does not reliably re-resolve per theme
-     for composite values like a multi-stop gradient, so this is spelled
-     out per theme on purpose rather than composed from extra layers. */
   --name-gradient: linear-gradient(
     100deg,
     var(--accent-1) 0%,
@@ -103,11 +87,7 @@ body.light-mode {
   --color-secondary: var(--accent-solid);
   --color-white: var(--color-text);
 
-  /* redeclared whole (see the note at the :root definition above) —
-     using a darker stand-in for --accent-2's 50% stop specifically,
-     since the real --accent-2 (a light amber) is too pale to read as
-     a thin text stroke on this theme's near-white background, even
-     though it works fine as a button/card fill. */
+
   --name-gradient: linear-gradient(
     100deg,
     var(--accent-1) 0%,
@@ -127,9 +107,8 @@ body.light-mode {
   color-scheme: light;
 }
 
-/* -------------------------------------------------------------------- */
-/*  Reset                                                                */
-/* -------------------------------------------------------------------- */
+/*  Reset  */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -155,7 +134,7 @@ body {
   position: relative;
 }
 
-/* soft ambient glow behind everything — restrained, single accent family */
+
 body::before {
   content: "";
   position: fixed;
@@ -206,7 +185,7 @@ img {
   color: #fff;
 }
 
-/* visible keyboard focus everywhere */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -216,21 +195,12 @@ textarea:focus-visible {
   border-radius: var(--radius-sm);
 }
 
-/* -------------------------------------------------------------------- */
-/*  Shared layout primitives                                            */
-/* -------------------------------------------------------------------- */
-/* Sections stack in normal document flow (continuous scroll, not
-   paginated snapping) — each just gets generous breathing room, rather
-   than being forced to fill/center within 100vh regardless of how much
-   content it holds. */
 .section {
   width: 100%;
   padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 9vw, 10rem);
 }
 
-/* The hero is the one exception — it should still present as a full
-   landing screen on first load, the same way the reference site's does,
-   with its content vertically centered within that height. */
+
 #home.section {
   position: relative;
   min-height: 100vh;
@@ -273,9 +243,7 @@ textarea:focus-visible {
   font-weight: 800;
   white-space: nowrap;
 
-  /* reset the gradient text-clip inherited from ".main-title h2 span" —
-     without this, the low-alpha color below still paints through the
-     clipped gradient background instead of a plain faint tint */
+
   background: none;
   -webkit-background-clip: initial;
   background-clip: initial;
@@ -333,22 +301,7 @@ textarea:focus-visible {
   transform: translateX(2px) rotate(-8deg);
 }
 
-/* -------------------------------------------------------------------- */
-/*  Keyframes                                                            */
-/*  Note: float/wave/nameShimmer/spinSlow used to live here, but they    */
-/*  were only ever referenced from Header.module.css. A @keyframes rule  */
-/*  defined in this plain global file and referenced from a CSS Module   */
-/*  gets a mismatched name after the build: the module file's reference  */
-/*  gets scoped/hashed, but the definition here doesn't, so the browser  */
-/*  can never find a matching keyframes rule — the animation is silently */
-/*  a no-op (animation-name/duration/etc. all look correct on inspection,*/
-/*  but document.getAnimations() on the element is empty). They now live */
-/*  in Header.module.css itself instead, alongside the site's other      */
-/*  Header-local keyframes, so the definition and every reference get    */
-/*  hashed together consistently.                                       */
-/* -------------------------------------------------------------------- */
 
-/* respect users who'd rather not see motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -370,8 +323,6 @@ textarea:focus-visible {
     padding-top: clamp(5rem, 14vw, 6rem);
   }
 
-  /* clear the fixed bottom nav pill only at the very end of the page —
-     mid-page sections don't need the gap, only the last one does */
   main > .section:last-child {
     padding-bottom: 6.5rem;
   }

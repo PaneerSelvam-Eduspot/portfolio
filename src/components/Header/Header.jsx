@@ -14,11 +14,6 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-// The photo + orbiting badges animate as one coordinated group, and —
-// unlike the text beside them — replay every time this group scrolls
-// into view (not just on first load): scroll down away from the hero
-// and the whole cluster zooms back out, scroll back up and it zooms
-// back in, picture and icons together.
 const heroVisual = {
   hidden: {},
   show: {
@@ -38,10 +33,6 @@ const photoZoom = {
     scale: 1,
     y: 0,
     transition: {
-      // opacity/y get their own plain tween — letting them share the
-      // spring below (meant for "scale") left opacity sitting stuck at
-      // 0 for the entire bounce, only snapping to 1 once the spring
-      // fully settled, instead of fading in smoothly alongside it
       opacity: { duration: 0.3, ease: "easeOut" },
       y: { duration: 0.4, ease: "easeOut" },
       scale: { type: "spring", stiffness: 190, damping: 13, mass: 0.9 },
@@ -82,12 +73,7 @@ export default function Header({ onNavigate }) {
           <img src="/img/port_dp_.png" alt="Portrait of Paneer Selvam" />
         </motion.div>
 
-        {/* floating skill badges around the photo — a nod to the
-            reference hero's orbiting tech-icon bubbles, using icons
-            for skills that are already in the About section. They
-            zoom in/out as one group with the photo (variants above),
-            then keep floating gently in sync with it once settled
-            (see the shared "float" animation in Header.module.css). */}
+
         <motion.div
           className={`${styles.badge} ${styles.badgeCode}`}
           variants={badgeZoom}

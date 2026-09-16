@@ -6,7 +6,7 @@ function getInitialTheme() {
   if (typeof window === "undefined") return "dark";
   const saved = window.localStorage.getItem(STORAGE_KEY);
   if (saved === "light" || saved === "dark") return saved;
-  // fall back to the visitor's OS preference on first visit
+
   const prefersLight = window.matchMedia?.(
     "(prefers-color-scheme: light)"
   ).matches;

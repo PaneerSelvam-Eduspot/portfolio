@@ -1,5 +1,3 @@
-// Update these with your real profile URLs.
-// `icon` is a semantic key looked up against the ICONS map in SocialIcons.jsx.
 export const socials = [
   {
     id: "linkedin",

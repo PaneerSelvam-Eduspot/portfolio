@@ -1,6 +1,3 @@
-// Lucide dropped brand/trademark icons, so the handful this site needs
-// (GitHub, LinkedIn, X) are hand-drawn here as simple, currentColor SVGs.
-// Usage matches lucide: <GithubIcon size={18} />
 
 export function GithubIcon({ size = 20, ...props }) {
   return (

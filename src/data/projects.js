@@ -1,5 +1,4 @@
-// Titles below are best guesses from the image filenames — rename freely.
-// Swap "#" for real repo/live links whenever you have them.
+
 export const projects = [
   {
     id: "codeeditor",

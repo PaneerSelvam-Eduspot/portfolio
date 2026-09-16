@@ -11,7 +11,6 @@ const titleReveal = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-// "Get in touch" heading, then the info cards — laid down as a group.
 const leftStack = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
@@ -22,7 +21,7 @@ const leftItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
-// each contact info card is its own brick within that group
+
 const infoGrid = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
@@ -33,8 +32,6 @@ const infoItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
-// the form itself builds field by field: name, email, message, then the
-// submit row
 const formStack = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
