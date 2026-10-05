@@ -3,3 +3,35 @@
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+.footer {
+  margin: 0 auto;
+  padding: var(--space-5) clamp(1.5rem, 9vw, 10rem) var(--space-6);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.footer p {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  backdrop-filter: blur(18px);
+}
+
+@media (max-width: 860px) {
+  .footer {
+    padding-bottom: 6rem;
+  }
+
+  .footer p {
+    width: min(100%, 22rem);
+  }
+}
