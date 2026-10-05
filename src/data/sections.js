@@ -5,3 +5,5 @@ export const sections = [
   { id: "portfolio", label: "Portfolio", icon: "portfolio" },
   { id: "contact", label: "Contact", icon: "contact" },
 ];
+
+
