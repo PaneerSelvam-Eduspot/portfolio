@@ -1,6 +1,6 @@
 export const stats = [
-  { value: "5+", label: "Hands On Projects " },
-  { value: "150+", label: "DSA problem Solved" },
+  { value: "4", label: "Hands On Projects " },
+  { value: "100+", label: "DSA problem Solved" },
   { value: "20+", label: "Online Courses Completed" },
 ];
 
